@@ -1,0 +1,23 @@
+name: pipeline
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: golang:1.22
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Tests
+        run: GOOS=linux GOARCH=amd64 go test
+
+      - name: Vet
+        run: go vet ./...
+  
+  deploy:
+    name: Public app in DockerHub
+    runs-on: ubuntu-latest
+    needs: test
+    
+
+
+    
